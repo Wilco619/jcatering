@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Menu Hero Section -->
+<div class="relative bg-gradient-to-r from-amber-800 to-amber-600 py-20">
+    <div class="absolute inset-0 overflow-hidden">
+        <img src="{% static 'images/menu-bg.jpg' %}" alt="Menu Background" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="relative container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">Our Culinary Selection</h1>
+        <p class="text-xl text-white/90 text-center max-w-2xl mx-auto">Discover our expertly crafted dishes, prepared with passion and premium ingredients</p>
+    </div>
+</div>
+
+<!-- Category Navigation -->
+<div class="sticky top-16 bg-white shadow-md z-30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-center space-x-4 py-4 overflow-x-auto">
+            <button onclick="filterCategory('all')" class="category-btn active px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                All
+            </button>
+            <button onclick="filterCategory('breakfast')" class="category-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Breakfast
+            </button>
+            <button onclick="filterCategory('lunch')" class="category-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Lunch
+            </button>
+            <button onclick="filterCategory('dinner')" class="category-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Dinner
+            </button>
+            <button onclick="filterCategory('desserts')" class="category-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Desserts
+            </button>
+            <button onclick="filterCategory('beverages')" class="category-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Beverages
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Menu Categories -->
+<div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- Breakfast Section -->
+        <div class="menu-category" data-category="breakfast">
+            <div class="relative mb-12">
+                <img src="{% static 'images/breakfast.jpg' %}" alt="Breakfast" class="w-full h-64 object-cover rounded-xl">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent rounded-xl"></div>
+                <h2 class="absolute bottom-8 left-8 text-3xl font-bold text-white">Breakfast Selection</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="{% static 'images/english-breakfast.jpg' %}" alt="English Breakfast" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">English Breakfast</h3>
+                        <p class="text-gray-600">Eggs, bacon, sausages, beans, mushrooms, tomatoes, and toast</p>
+                    </div>
+                </div>
+                <!-- Add more breakfast items -->
+            </div>
+        </div>
+
+        <!-- Beverages Section with Prices -->
+        <div class="menu-category" data-category="beverages">
+            <div class="relative mb-12">
+                <img src="{% static 'images/beverages.jpg' %}" alt="Beverages" class="w-full h-64 object-cover rounded-xl">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent rounded-xl"></div>
+                <h2 class="absolute bottom-8 left-8 text-3xl font-bold text-white">Beverages</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow p-4 text-center">
+                    <div class="w-16 h-16 mx-auto mb-3">
+                        <img src="{% static 'images/coffee.svg' %}" alt="Coffee" class="w-full h-full">
+                    </div>
+                    <h3 class="font-semibold">Coffee</h3>
+                    <p class="text-amber-600">Ksh2.50</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 text-center">
+                    <div class="w-16 h-16 mx-auto mb-3">
+                        <img src="{% static 'images/milkshake.svg' %}" alt="Milkshake" class="w-full h-full">
+                    </div>
+                    <h3 class="font-semibold">Milkshake</h3>
+                    <p class="text-amber-600">Ksh4.50</p>
+                </div>
+                <!-- Add more beverage items -->
+            </div>
+        </div>
+
+        <!-- Add more category sections -->
+    </div>
+</div>
+
+<!-- Add this script section -->
+<script>
+    function filterCategory(category) {
+        // Update active button
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.classList.remove('active', 'bg-amber-600', 'text-white');
+            btn.classList.add('text-amber-600');
+        });
+        event.target.classList.add('active', 'bg-amber-600', 'text-white');
+        event.target.classList.remove('text-amber-600');
+
+        // Show/hide categories
+        document.querySelectorAll('.menu-category').forEach(cat => {
+            if (category === 'all' || cat.dataset.category === category) {
+                cat.style.display = 'block';
+                // Add fade-in animation
+                cat.classList.add('animate-fade-in');
+            } else {
+                cat.style.display = 'none';
+                cat.classList.remove('animate-fade-in');
+            }
+        });
+    }
+
+    // Initialize with 'all' category
+    document.addEventListener('DOMContentLoaded', () => {
+        filterCategory('all');
+    });
+</script>
+
+<style>
+    .category-btn.active {
+        background-color: #d97706; /* Tailwind's amber-600 */
+        color: #fff;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .menu-category {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .menu-category.animate-fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% endblock %}

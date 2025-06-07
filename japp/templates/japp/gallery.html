@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Gallery Hero Section -->
+<div class="relative bg-gradient-to-r from-amber-800 to-amber-600 py-20">
+    <div class="absolute inset-0 overflow-hidden">
+        <img src="{% static 'images/gallery-hero.jpg' %}" alt="Gallery Background" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="relative container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">Our Gallery</h1>
+        <p class="text-xl text-white/90 text-center max-w-2xl mx-auto">A visual journey through our culinary creations and events</p>
+    </div>
+</div>
+
+<!-- Filter Buttons -->
+<div class="sticky top-16 bg-white shadow-md z-30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-center space-x-4 py-4 overflow-x-auto">
+            <button onclick="filterGallery('all')" class="filter-btn active px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                All
+            </button>
+            <button onclick="filterGallery('events')" class="filter-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Events
+            </button>
+            <button onclick="filterGallery('dishes')" class="filter-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Dishes
+            </button>
+            <button onclick="filterGallery('venue')" class="filter-btn px-6 py-2 rounded-full text-amber-600 hover:bg-amber-50 transition-all duration-300">
+                Venues
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Gallery Grid -->
+<div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+            <!-- Events -->
+            <div class="gallery-item break-inside-avoid" data-category="events">
+                <div class="relative overflow-hidden rounded-lg cursor-pointer group" onclick="openLightbox(this)">
+                    <img src="{% static 'images/gallery/event1.jpg' %}" alt="Corporate Event" class="w-full">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <p class="text-white text-lg font-semibold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            Corporate Gala Dinner
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add more gallery items following the same pattern -->
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-amber-400">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+    <div class="flex items-center justify-center h-full">
+        <img id="lightbox-img" src="" alt="" class="max-h-[90vh] max-w-[90vw] object-contain">
+    </div>
+</div>
+
+<script>
+    function filterGallery(category) {
+        // Update active button
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active', 'bg-amber-600', 'text-white');
+            btn.classList.add('text-amber-600');
+        });
+        event.target.classList.add('active', 'bg-amber-600', 'text-white');
+        event.target.classList.remove('text-amber-600');
+
+        // Filter items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.style.display = 'block';
+                item.classList.add('animate-fade-in');
+            } else {
+                item.style.display = 'none';
+                item.classList.remove('animate-fade-in');
+            }
+        });
+    }
+
+    function openLightbox(element) {
+        const img = element.querySelector('img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close lightbox on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+</script>
+
+<style>
+    .filter-btn.active {
+        background-color: #d97706; /* Tailwind's bg-amber-600 */
+        color: #fff; /* Tailwind's text-white */
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .gallery-item {
+        transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}

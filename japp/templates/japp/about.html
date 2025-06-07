@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gradient-to-r from-amber-800 to-amber-600 py-20">
+    <div class="absolute inset-0 overflow-hidden">
+        <img src="{% static 'images/about-hero.jpg' %}" alt="About Us" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="relative container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">Our Story</h1>
+        <p class="text-xl text-white/90 text-center max-w-2xl mx-auto">Crafting memorable experiences through exceptional catering since 2010</p>
+    </div>
+</div>
+
+<!-- History Section -->
+<div class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h2 class="text-3xl font-bold text-gray-800">Our Journey</h2>
+                <p class="text-gray-600">Founded in 2010, J Catering began with a simple passion for creating extraordinary dining experiences. What started as a small family business has grown into one of the region's most trusted catering services.</p>
+                <p class="text-gray-600">Over the years, we've had the privilege of serving thousands of events, from intimate gatherings to grand celebrations, always maintaining our commitment to quality and personalized service.</p>
+            </div>
+            <div class="relative">
+                <img src="{% static 'images/about-history.jpg' %}" alt="Our History" class="rounded-lg shadow-xl">
+                <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-amber-600 rounded-lg -z-10"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Values Section -->
+<div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Core Values</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Quality -->
+            <div class="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="w-16 h-16 bg-amber-100 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4">Quality Excellence</h3>
+                <p class="text-gray-600 text-center">We source only the finest ingredients and maintain the highest standards in food preparation and service.</p>
+            </div>
+
+            <!-- Innovation -->
+            <div class="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="w-16 h-16 bg-amber-100 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4">Creative Innovation</h3>
+                <p class="text-gray-600 text-center">We constantly explore new culinary trends and innovative presentation techniques to exceed expectations.</p>
+            </div>
+
+            <!-- Service -->
+            <div class="bg-white rounded-lg p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="w-16 h-16 bg-amber-100 rounded-lg flex items-center justify-center mb-6 mx-auto">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4">Dedicated Service</h3>
+                <p class="text-gray-600 text-center">Our team is committed to providing exceptional service and creating memorable experiences.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Team Section -->
+<div class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+        <div class="grid md:grid-cols-4 gap-8">
+            <!-- Team Member -->
+            <div class="group">
+                <div class="relative overflow-hidden rounded-lg mb-4">
+                    <img src="{% static 'images/team/chef1.jpg' %}" alt="Executive Chef" class="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-lg font-semibold">John Doe</h3>
+                <p class="text-amber-600">Executive Chef</p>
+            </div>
+            <!-- Add more team members following the same pattern -->
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="py-16 bg-amber-600">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">
+                    <span class="counter" data-target="15">0</span>+
+                </div>
+                <div class="text-white/90">Years Experience</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">
+                    <span class="counter" data-target="5000">0</span>+
+                </div>
+                <div class="text-white/90">Events Catered</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">
+                    <span class="counter" data-target="50">0</span>+
+                </div>
+                <div class="text-white/90">Team Members</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">
+                    <span class="counter" data-target="98">0</span>%
+                </div>
+                <div class="text-white/90">Client Satisfaction</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200; // The lower the faster
+
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    function animateCounter(counter) {
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const inc = target / speed;
+
+        function updateCount() {
+            if (count < target) {
+                count += inc;
+                counter.innerText = Math.ceil(count);
+                requestAnimationFrame(updateCount);
+            } else {
+                counter.innerText = target;
+            }
+        }
+
+        updateCount();
+    }
+
+    // Start animation when element comes into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                animateCounter(entry.target);
+                entry.target.classList.add('counted'); // Prevent re-counting
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
+</script>
+{% endblock %}

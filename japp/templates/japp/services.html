@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gradient-to-r from-amber-600 to-amber-800 py-20">
+    <div class="absolute inset-0 overflow-hidden">
+        <img src="{% static 'images/services-bg.jpg' %}" alt="Services Background" class="w-full h-full object-cover opacity-20">
+    </div>
+    <div class="relative container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">Our Catering Services</h1>
+        <p class="text-xl text-white/90 text-center max-w-2xl mx-auto">Experience culinary excellence with our diverse range of catering solutions tailored to your needs.</p>
+    </div>
+</div>
+
+<!-- Services Grid -->
+<div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Corporate Events -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <div class="relative h-48">
+                    <img src="{% static 'images/corporate.jpg' %}" alt="Corporate Events" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <h3 class="absolute bottom-4 left-4 text-2xl font-semibold text-white">Corporate Events</h3>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Business Meetings
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Conferences
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Team Building Events
+                        </li>
+                    </ul>
+                    <button class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg transition-colors duration-300">
+                        Get Quote
+                    </button>
+                </div>
+            </div>
+
+            <!-- Weddings -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <div class="relative h-48">
+                    <img src="{% static 'images/wedding.jpg' %}" alt="Weddings" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <h3 class="absolute bottom-4 left-4 text-2xl font-semibold text-white">Weddings</h3>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Full Reception Service
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Cocktail Hours
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Custom Menu Design
+                        </li>
+                    </ul>
+                    <button class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg transition-colors duration-300">
+                        Get Quote
+                    </button>
+                </div>
+            </div>
+
+            <!-- Private Parties -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                <div class="relative h-48">
+                    <img src="{% static 'images/private-party.jpg' %}" alt="Private Parties" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/50"></div>
+                    <h3 class="absolute bottom-4 left-4 text-2xl font-semibold text-white">Private Parties</h3>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Birthday Celebrations
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Anniversary Parties
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-amber-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                            </svg>
+                            Family Gatherings
+                        </li>
+                    </ul>
+                    <button class="mt-6 w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg transition-colors duration-300">
+                        Get Quote
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Why Choose Our Catering Services?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Quality Ingredients</h3>
+                <p class="text-gray-600">Fresh, locally-sourced ingredients for exceptional taste.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Timely Service</h3>
+                <p class="text-gray-600">Punctual and professional service delivery.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Custom Menus</h3>
+                <p class="text-gray-600">Tailored menus to match your preferences.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Expert Staff</h3>
+                <p class="text-gray-600">Professional and experienced team.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-amber-600 py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Ready to Plan Your Event?</h2>
+        <p class="text-white/90 mb-8 max-w-2xl mx-auto">Let us help you create an unforgettable experience with our premium catering services.</p>
+        <a href="{% url 'japp:contact' %}" class="inline-block bg-white text-amber-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-amber-50 transition-colors duration-300">
+            Contact Us Now
+        </a>
+    </div>
+</div>
+{% endblock %}
