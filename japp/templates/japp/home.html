@@ -74,7 +74,7 @@
 
     .partner-slider {
         display: flex;
-        animation: slide 20s linear infinite;
+        animation: slide 100s linear infinite;
         width: fit-content;
     }
 
@@ -120,9 +120,9 @@
                  alt="Elegant dining setup" class="w-full h-full object-cover">
             <div class="absolute inset-0 flex items-center justify-center text-center text-white">
                 <div class="max-w-4xl px-4">
-                    <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up">J Catering</h1>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up">Jawaka Catering</h1>
                     <p class="text-xl md:text-2xl mb-8 font-light animate-fade-in-up-delay">Exquisite culinary experiences crafted with passion</p>
-                    <a href="{% url 'japp:services' %}" class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 animate-fade-in-up-delay-2 hover:shadow-2xl">
+                    <a href="{% url 'japp:menu' %}" class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 animate-fade-in-up-delay-2 hover:shadow-2xl">
                         Explore Our Menu
                     </a>
                 </div>
@@ -138,7 +138,7 @@
                 <div class="max-w-4xl px-4">
                     <h1 class="text-5xl md:text-7xl font-bold mb-6">Culinary Excellence</h1>
                     <p class="text-xl md:text-2xl mb-8 font-light">From intimate gatherings to grand celebrations</p>
-                    <a href="{% url 'japp:contact' %}" class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <a href="{% url 'japp:quote_request' %}" class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
                         Book Your Event
                     </a>
                 </div>
@@ -154,7 +154,7 @@
                 <div class="max-w-4xl px-4">
                     <h1 class="text-5xl md:text-7xl font-bold mb-6">Unforgettable Events</h1>
                     <p class="text-xl md:text-2xl mb-8 font-light">Every detail perfected, every moment cherished</p>
-                    <a href="{% url 'japp:about' %}" class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <a href="{% url 'japp:quote_request' %}" class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
                         Get Started
                     </a>
                 </div>
@@ -206,7 +206,7 @@
                 <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                 </svg>
-                <span class="font-medium">info@jcatering.com</span>
+                <span class="font-medium">info@jawaka.co.ke</span>
             </div>
             <div class="flex items-center space-x-2">
                 <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -274,27 +274,140 @@
             <div class="partner-slider flex items-center space-x-24">
                 <!-- First set -->
                 <div class="partner-logo flex-shrink-0">
-                    <img src="{% static 'images/github-brands.svg' %}" alt="Partner 1" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300">
+                    <img src="{% static 'images/aca.png' %}" alt="Partner 1" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
                 </div>
                 <div class="partner-logo flex-shrink-0">
-                    <img src="{% static 'images/github-brands.svg' %}" alt="Partner 2" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300">
+                    <img src="{% static 'images/eacc.png' %}" alt="Partner 2" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
                 </div>
                 <div class="partner-logo flex-shrink-0">
-                    <img src="{% static 'images/github-brands.svg' %}" alt="Partner 3" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300">
+                    <img src="{% static 'images/equity-.png' %}" alt="Partner 3" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
                 </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/knhcr.png' %}" alt="Partner 4" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/logos.png' %}" alt="Partner 5" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/stpaul.png' %}" alt="Partner 6" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/galana.png' %}" alt="Partner 7" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/ponea.jpeg' %}" alt="Partner 8" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/seventh.png' %}" alt="Partner 9" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/bukura.png' %}" alt="Partner 10" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+
                 <!-- Add duplicates for infinite loop -->
                 <div class="partner-logo flex-shrink-0">
-                    <img src="{% static 'images/github-brands.svg' %}" alt="Partner 1" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300">
+                    <img src="{% static 'images/mrgreen.png' %}" alt="Partner 11" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
                 </div>
                 <div class="partner-logo flex-shrink-0">
-                    <img src="{% static 'images/github-brands.svg' %}" alt="Partner 2" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300">
+                    <img src="{% static 'images/bukura.png' %}" alt="Partner 10" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
                 </div>
                 <div class="partner-logo flex-shrink-0">
-                    <img src="{% static 'images/github-brands.svg' %}" alt="Partner 3" class="h-20 w-auto grayscale hover:grayscale-0 transition-all duration-300">
+                    <img src="{% static 'images/seventh.png' %}" alt="Partner 9" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
                 </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/ponea.jpeg' %}" alt="Partner 8" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/galana.png' %}" alt="Partner 7" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/stpaul.png' %}" alt="Partner 6" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/logos.png' %}" alt="Partner 5" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/knhcr.png' %}" alt="Partner 4" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/equity-.png' %}" alt="Partner 3" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                <div class="partner-logo flex-shrink-0">
+                    <img src="{% static 'images/eacc.png' %}" alt="Partner 2" class="h-20 w-auto hover:grayscale-0 transition-all duration-300">
+                </div>
+                                
             </div>
         </div>
     </div>
+
+    <!-- Testimonials Section -->
+<div class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Read what our valued customers have to say about their experience with us</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-12 h-12 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">EACC Kenya</h3>
+                        <p class="text-gray-600">Corporate Event</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Exceptional service and attention to detail. The team went above and beyond to ensure our corporate event was a success."</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-12 h-12 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Equity Bank</h3>
+                        <p class="text-gray-600">Annual Gala Dinner</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"The quality of food and presentation was outstanding. Our employees were thoroughly impressed with the service."</p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-gray-50 p-8 rounded-xl shadow-sm">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0">
+                        <svg class="w-12 h-12 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-gray-800">KNHCR</h3>
+                        <p class="text-gray-600">Conference Catering</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Professional, punctual, and perfect execution. The catering service exceeded our expectations in every way."</p>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center mt-12">
+            <a href="{% url 'japp:quote_request' %}" 
+               class="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                Get Your Custom Quote
+            </a>
+        </div>
+    </div>
+</div>
 </div>
 
 <!-- WhatsApp Float Button -->

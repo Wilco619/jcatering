@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #d97706;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .details {
+            margin: 20px 0;
+        }
+        .detail-row {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-weight: bold;
+            color: #666;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>New Quote Request</h1>
+    </div>
+    
+    <div class="content">
+        <p>A new quote request has been submitted through the website.</p>
+
+        <div class="details">
+            <div class="detail-row">
+                <span class="label">Name:</span> {{ quote.name }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Email:</span> {{ quote.email }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Phone:</span> {{ quote.phone }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Event Type:</span> {{ quote.event_type }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Event Date:</span> {{ quote.event_date }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Number of Guests:</span> {{ quote.number_of_guests }}
+            </div>
+            <div class="detail-row">
+                <span class="label">Budget Range:</span> {{ quote.budget_range }}
+            </div>
+            {% if quote.preferred_menu_items %}
+            <div class="detail-row">
+                <span class="label">Preferred Menu Items:</span>
+                <p>{{ quote.preferred_menu_items }}</p>
+            </div>
+            {% endif %}
+            {% if quote.special_requests %}
+            <div class="detail-row">
+                <span class="label">Special Requests:</span>
+                <p>{{ quote.special_requests }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <p>
+            <a href="{{ admin_url }}" style="background-color: #d97706; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                View Quote Details
+            </a>
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>This is an automated message from JAWAKA Catering's website.</p>
+    </div>
+</body>
+</html>

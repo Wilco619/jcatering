@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    {% include 'japp/admin/includes/sidebar.html' with active_tab='gallery' %}
+    
+    <div class="ml-64 p-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Gallery Management</h1>
+            <a href="{% url 'japp:admin_gallery_add' %}" 
+               class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors duration-300">
+                Add New Image
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for image in images %}
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden gallery-item">
+                    <img src="{{ image.image.url }}" 
+                         alt="{{ image.title }}" 
+                         class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">{{ image.title }}</h3>
+                        <p class="text-sm text-gray-600 mt-1">{{ image.category.name }}</p>
+                        <div class="mt-4 flex justify-end space-x-2">
+                            <a href="{% url 'japp:admin_gallery_edit' image.id %}" 
+                               class="text-amber-600 hover:text-amber-700">Edit</a>
+                            <button onclick="confirmDelete('{{ image.title|escapejs }}')"
+                                    class="text-red-600 hover:text-red-700">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-gray-500">
+                    No gallery images found. Click "Add New Image" to create one.
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+        <h3 class="text-lg font-semibold mb-4">Confirm Delete</h3>
+        <p class="text-gray-600">Are you sure you want to delete "<span id="deleteItemName"></span>"?</p>
+        <div class="mt-6 flex justify-end space-x-3">
+            <button type="button" onclick="closeDeleteModal()" 
+                    class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+            <button type="button" id="deleteButton" onclick="deleteItem()" 
+                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let deleteId = null;
+const csrfToken = '{{ csrf_token }}';
+
+function confirmDelete(id, name) {
+    if (!id) {
+        console.error('No ID provided for deletion');
+        return;
+    }
+    deleteId = id;
+    document.getElementById('deleteItemName').textContent = name || 'this item';
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    deleteId = null;
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+
+async function deleteItem() {
+    if (!deleteId) {
+        console.error('No item selected for deletion');
+        return;
+    }
+    
+    const deleteButton = document.getElementById('deleteButton');
+    const originalText = deleteButton.textContent;
+    
+    try {
+        deleteButton.textContent = 'Deleting...';
+        deleteButton.disabled = true;
+        
+        const response = await fetch(`/custom-admin/gallery/delete/${deleteId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            window.location.reload();
+        } else {
+            throw new Error(data.message || 'Failed to delete image');
+        }
+    } catch (error) {
+        console.error('Delete operation failed:', error);
+        alert('Failed to delete image: ' + error.message);
+    } finally {
+        deleteButton.textContent = originalText;
+        deleteButton.disabled = false;
+        closeDeleteModal();
+    }
+}
+
+function previewImage(event) {
+    const input = event.target;
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const gridItems = document.querySelectorAll('.gallery-item');
+    gridItems.forEach((item, index) => {
+        setTimeout(() => {
+            item.classList.add('opacity-100');
+        }, index * 100);
+    });
+});
+</script>
+
+<style>
+.gallery-item {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.gallery-item.opacity-100 {
+    opacity: 1;
+}
+</style>
+{% endblock %}

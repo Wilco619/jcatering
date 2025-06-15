@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen py-8">
+    <div class="container mx-auto px-4">
+        <!-- Welcome Section -->
+        <div class="bg-gradient-to-r from-amber-600 to-orange-500 rounded-xl p-6 text-white mb-8">
+            <h1 class="text-2xl font-bold mb-2">Welcome back, {{ user.get_full_name|default:user.username }}!</h1>
+            <p class="opacity-90">Manage your orders and account settings here</p>
+        </div>
+
+        <div class="grid md:grid-cols-12 gap-6">
+            <!-- Left Sidebar -->
+            <div class="md:col-span-3 space-y-6">
+                <!-- Profile Card -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-amber-600">{{ user.get_full_name|first|upper }}</span>
+                        </div>
+                        <h2 class="font-semibold">{{ user.get_full_name }}</h2>
+                        <p class="text-sm text-gray-500">{{ user.email }}</p>
+                    </div>
+                    <div class="mt-6 space-y-2">
+                        <a href="{% url 'users:profile' %}" class="block text-sm text-gray-600 hover:text-amber-600">
+                            <i class="fas fa-user mr-2"></i> Edit Profile
+                        </a>
+                        <a href="{% url 'users:change_password' %}" class="block text-sm text-gray-600 hover:text-amber-600">
+                            <i class="fas fa-lock mr-2"></i> Change Password
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="font-semibold mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <a href="{% url 'japp:quote_request' %}" 
+                           class="block w-full text-center bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition-colors">
+                            New Quote Request
+                        </a>
+                        <a href="{% url 'japp:menu' %}" 
+                           class="block w-full text-center border border-amber-600 text-amber-600 py-2 rounded-lg hover:bg-amber-50 transition-colors">
+                            View Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="md:col-span-9 space-y-6">
+                <!-- Active Orders -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-xl font-semibold mb-4">Active Orders</h2>
+                    {% if active_quotes %}
+                        <div class="space-y-4">
+                            {% for quote in active_quotes %}
+                            <div class="border rounded-lg p-4 hover:border-amber-500 transition-colors">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold">{{ quote.event_type }}</h3>
+                                        <p class="text-sm text-gray-500">Event Date: {{ quote.event_date }}</p>
+                                        <p class="text-sm text-gray-500">Status: 
+                                            <span class="text-amber-600">{{ quote.get_status_display }}</span>
+                                        </p>
+                                    </div>
+                                    <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm">
+                                        {{ quote.guest_count }} Guests
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500 text-center py-8">No active orders at the moment</p>
+                    {% endif %}
+                </div>
+
+                <!-- Quote History -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-xl font-semibold mb-4">Quote History</h2>
+                    {% if quote_history %}
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="text-left py-3">Event</th>
+                                        <th class="text-left py-3">Date</th>
+                                        <th class="text-left py-3">Status</th>
+                                        <th class="text-left py-3">Guests</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for quote in quote_history %}
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="py-3">{{ quote.event_type }}</td>
+                                        <td class="py-3">{{ quote.event_date }}</td>
+                                        <td class="py-3">
+                                            <span class="px-2 py-1 rounded-full text-xs 
+                                                {% if quote.status == 'accepted' %}bg-green-100 text-green-800
+                                                {% elif quote.status == 'pending' %}bg-yellow-100 text-yellow-800
+                                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                                {{ quote.get_status_display }}
+                                            </span>
+                                        </td>
+                                        <td class="py-3">{{ quote.guest_count }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500 text-center py-8">No quote history available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+        }
+    }
+</style>
+{% endblock %}

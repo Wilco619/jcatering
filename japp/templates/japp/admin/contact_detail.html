@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    {% include 'japp/admin/includes/sidebar.html' with active_tab=active_tab %}
+    
+    <div class="ml-64 p-8">
+        <div class="mb-6 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Contact Message Details</h1>
+            <a href="{% url 'japp:admin_contacts' %}" 
+               class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                Back to Messages
+            </a>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <!-- Message Header -->
+            <div class="border-b pb-4 mb-4">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">{{ contact.subject }}</h2>
+                        <p class="text-sm text-gray-500">From: {{ contact.name }} ({{ contact.email }})</p>
+                    </div>
+                    <span class="text-sm text-gray-500">{{ contact.created_at|date:"F j, Y H:i" }}</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="px-2 py-1 text-xs rounded-full {% if contact.is_read %}bg-green-100 text-green-800{% else %}bg-amber-100 text-amber-800{% endif %}">
+                        {{ contact.is_read|yesno:"Read,Unread" }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Message Content -->
+            <div class="prose max-w-none">
+                <p class="whitespace-pre-wrap text-gray-700">{{ contact.message }}</p>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-6 pt-6 border-t flex justify-between items-center">
+                <div class="flex space-x-4">
+                    <a href="mailto:{{ contact.email }}" 
+                       class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors">
+                        Reply via Email
+                    </a>
+                    {% if not contact.is_read %}
+                        <form method="POST" action="{% url 'japp:admin_contact_mark_read' contact.pk %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" 
+                                    class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                                Mark as Read
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+                <span class="text-sm text-gray-500">
+                    {% if contact.is_read %}
+                        Read on {{ contact.updated_at|date:"F j, Y H:i" }}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

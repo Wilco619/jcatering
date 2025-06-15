@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    {% include 'japp/admin/includes/sidebar.html' with active_tab=active_tab %}
+    
+    <div class="ml-64 p-8">
+        <h1 class="text-2xl font-bold mb-6">Admin Dashboard</h1>
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Pending Quotes</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ pending_quotes }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Menu Items</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ total_menu_items }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Gallery Items</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ total_gallery_items }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-gray-500 text-sm">Total Subscribers</h3>
+                <p class="text-3xl font-bold text-gray-800">{{ total_subscribers }}</p>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Recent Quotes -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Recent Quote Requests</h2>
+                <div class="space-y-4">
+                    {% for quote in recent_quotes %}
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-medium">{{ quote.name }}</p>
+                                <p class="text-sm text-gray-500">{{ quote.event_type }}</p>
+                            </div>
+                            <span class="text-xs text-gray-500">{{ quote.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-500 text-center py-4">No recent quotes</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Recent Contacts -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Recent Contact Messages</h2>
+                <div class="space-y-4">
+                    {% for contact in recent_contacts %}
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-medium">{{ contact.name }}</p>
+                                <p class="text-sm text-gray-500">{{ contact.subject }}</p>
+                            </div>
+                            <span class="text-xs text-gray-500">{{ contact.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-500 text-center py-4">No recent messages</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

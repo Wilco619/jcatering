@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    {% include 'japp/admin/includes/sidebar.html' with active_tab='menu' %}
+    
+    <div class="ml-64 p-8">
+        <h1 class="text-2xl font-bold mb-6">Menu Management</h1>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700{% elif message.tags == 'error' %}bg-red-100 text-red-700{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex justify-between mb-6">
+                <h2 class="text-xl font-semibold">Menu Items</h2>
+                <a href="{% url 'japp:admin_menu_add' %}" 
+                   class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors duration-300">
+                    Add New Item
+                </a>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Name</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Category</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Price</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Status</th>
+                            <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for item in menu_items %}
+                        <tr id="menu-item-{{ item.id }}">
+                            <td class="px-6 py-4">{{ item.name }}</td>
+                            <td class="px-6 py-4">{{ item.category.name }}</td>
+                            <td class="px-6 py-4">Ksh {{ item.price|floatformat:2 }}</td>
+                            <td class="px-6 py-4">
+                                <button onclick="toggleStatus('{{ item.id }}')" 
+                                        class="px-2 py-1 text-xs rounded-full {% if item.is_available %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %} hover:opacity-75 transition-opacity duration-300">
+                                    {% if item.is_available %}Available{% else %}Unavailable{% endif %}
+                                </button>
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{% url 'japp:admin_menu_edit' item.id %}" 
+                                   class="text-amber-600 hover:text-amber-800 mr-3 transition-colors duration-300">
+                                    Edit
+                                </a>
+                                <button onclick="confirmDelete('{{ item.id }}', '{{ item.name|escapejs }}')" 
+                                        class="text-red-600 hover:text-red-800 transition-colors duration-300">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                No menu items found. Click "Add New Item" to create one.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Confirm Delete</h3>
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500">
+                    Are you sure you want to delete <span id="deleteItemName" class="font-medium"></span>? 
+                    This action cannot be undone.
+                </p>
+            </div>
+            <div class="items-center px-4 py-3">
+                <button id="cancelDelete" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md mr-2 hover:bg-gray-300">
+                    Cancel
+                </button>
+                <button id="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function confirmDelete(itemId, itemName) {
+        const modal = document.getElementById('deleteModal');
+        const nameSpan = document.getElementById('deleteItemName');
+        const confirmBtn = document.getElementById('confirmDelete');
+        const cancelBtn = document.getElementById('cancelDelete');
+        
+        nameSpan.textContent = itemName;
+        modal.classList.remove('hidden');
+        
+        confirmBtn.onclick = () => deleteItem(itemId);
+        cancelBtn.onclick = () => modal.classList.add('hidden');
+    }
+
+    async function deleteItem(itemId) {
+        try {
+            const response = await fetch(`/japp/admin/menu/delete/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                document.getElementById(`menu-item-${itemId}`).remove();
+                document.getElementById('deleteModal').classList.add('hidden');
+                showNotification('Item deleted successfully', 'success');
+            } else {
+                throw new Error('Failed to delete item');
+            }
+        } catch (error) {
+            showNotification('Failed to delete item', 'error');
+        }
+    }
+
+    async function toggleStatus(itemId) {
+        try {
+            const response = await fetch(`/japp/admin/menu/toggle-status/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                location.reload();
+            } else {
+                throw new Error('Failed to update status');
+            }
+        } catch (error) {
+            showNotification('Failed to update status', 'error');
+        }
+    }
+
+    function showNotification(message, type) {
+        // Implementation of notification system
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 p-4 rounded-lg ${
+            type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+        }`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}
