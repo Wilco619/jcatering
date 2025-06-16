@@ -35,6 +35,83 @@
     </div>
 </div>
 
+<!-- Directors Section -->
+<div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Directors</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Director 1 -->
+            <div class="flip-card h-64">
+                <div class="flip-card-inner">
+                    <!-- Front -->
+                    <div class="flip-card-front bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mb-4">
+                            <span class="text-2xl font-bold text-white">JD</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">John Doe</h3>
+                        <p class="text-amber-600">Managing Director</p>
+                    </div>
+                    <!-- Back -->
+                    <div class="flip-card-back bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl shadow-lg p-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-8 h-8 text-white/30 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                            <p class="text-white text-lg italic">"Our commitment to excellence drives everything we do."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Director 2 -->
+            <div class="flip-card h-64">
+                <div class="flip-card-inner">
+                    <!-- Front -->
+                    <div class="flip-card-front bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mb-4">
+                            <span class="text-2xl font-bold text-white">JS</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Jane Smith</h3>
+                        <p class="text-amber-600">Operations Director</p>
+                    </div>
+                    <!-- Back -->
+                    <div class="flip-card-back bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl shadow-lg p-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-8 h-8 text-white/30 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                            <p class="text-white text-lg italic">"Innovation and tradition go hand in hand."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Director 3 -->
+            <div class="flip-card h-64">
+                <div class="flip-card-inner">
+                    <!-- Front -->
+                    <div class="flip-card-front bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mb-4">
+                            <span class="text-2xl font-bold text-white">DW</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">David Wilson</h3>
+                        <p class="text-amber-600">Creative Director</p>
+                    </div>
+                    <!-- Back -->
+                    <div class="flip-card-back bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl shadow-lg p-8 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-8 h-8 text-white/30 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                            </svg>
+                            <p class="text-white text-lg italic">"Creativity is at the heart of great cuisine."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Mission & Vision Section -->
 <div class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
@@ -120,6 +197,30 @@
                 <h3 class="text-lg font-semibold">John Doe</h3>
                 <p class="text-amber-600">Executive Chef</p>
             </div>
+            <div class="group">
+                <div class="relative overflow-hidden rounded-lg mb-4">
+                    <img src="{% static 'images/team/pic1.jpg' %}" alt="Executive Chef" class="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-lg font-semibold">John Doe</h3>
+                <p class="text-amber-600">Executive Chef</p>
+            </div>
+            <div class="group">
+                <div class="relative overflow-hidden rounded-lg mb-4">
+                    <img src="{% static 'images/team/pic2.jpg' %}" alt="Executive Chef" class="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-lg font-semibold">John Doe</h3>
+                <p class="text-amber-600">Executive Chef</p>
+            </div>
+            <div class="group">
+                <div class="relative overflow-hidden rounded-lg mb-4">
+                    <img src="{% static 'images/team/pic3.jpg' %}" alt="Executive Chef" class="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-lg font-semibold">John Doe</h3>
+                <p class="text-amber-600">Executive Chef</p>
+            </div>  
             <!-- Add more team members following the same pattern -->
         </div>
     </div>
@@ -158,7 +259,7 @@
 </div>
 
 <!-- WhatsApp Float Button -->
-<a href="https://wa.me/+1234567890" 
+<a href="https://wa.me/+254799192069" 
    target="_blank"
    class="fixed bottom-8 left-8 bg-[#25D366] p-3.5 rounded-full text-white shadow-lg hover:scale-110 transition-transform duration-300 pulse z-50">
     <svg class="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -184,6 +285,33 @@
         }
     }
 
+    .flip-card {
+        perspective: 1000px;
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .flip-card-back {
+        transform: rotateY(180deg);
+    }
 </style>
 
 

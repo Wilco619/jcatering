@@ -86,12 +86,31 @@
                     {% endif %}
                 </div>
 
-                <!-- Availability Toggle -->
-                <div class="flex items-center">
-                    {{ form.is_available }}
-                    <label for="{{ form.is_available.id_for_label }}" class="ml-2 block text-sm text-gray-700">
-                        Available
+                <!-- Add these fields after the Image Field div -->
+                <div class="col-span-2 flex items-center space-x-6">
+                    <div class="flex items-center">
+                        {{ form.show_price }}
+                        <label for="{{ form.show_price.id_for_label }}" class="ml-2 block text-sm text-gray-700">
+                            Show Price
+                        </label>
+                    </div>
+                    <div class="flex items-center">
+                        {{ form.is_available }}
+                        <label for="{{ form.is_available.id_for_label }}" class="ml-2 block text-sm text-gray-700">
+                            Available
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Add Order Field before Submit Button -->
+                <div>
+                    <label for="{{ form.order.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                        Display Order
                     </label>
+                    {{ form.order }}
+                    {% if form.order.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.order.errors.0 }}</p>
+                    {% endif %}
                 </div>
 
                 <!-- Submit Button -->

@@ -36,4 +36,15 @@ urlpatterns = [
     
     path('custom-admin/subscribers/', views.admin_subscribers, name='admin_subscribers'),
     path('custom-admin/subscribers/export/', views.admin_subscribers_export, name='admin_subscribers_export'),
+    
+    # Menu Categories URLs
+    path('custom-admin/menu-categories/', views.admin_menu_categories, name='admin_menu_categories'),
+    path('custom-admin/menu-categories/add/', views.admin_menu_category_add, name='admin_menu_category_add'),
+    path('custom-admin/menu-categories/edit/<int:pk>/', views.admin_menu_category_edit, name='admin_menu_category_edit'),
+    path('custom-admin/menu-categories/delete/<int:pk>/', views.admin_menu_category_delete, name='admin_menu_category_delete'),
+    
+    # Gallery Categories URLs
+    path('custom-admin/gallery-categories/', views.admin_gallery_categories, name='admin_gallery_categories'),
+    path('custom-admin/gallery-categories/add/', views.admin_gallery_category_add, name='admin_gallery_category_add'),
+    path('custom-admin/gallery-categories/edit/<int:pk>/', views.admin_gallery_category_edit, name='admin_gallery_category_edit'),
 ]

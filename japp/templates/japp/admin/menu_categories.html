@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    {% include 'japp/admin/includes/sidebar.html' with active_tab='menu_categories' %}
+    
+    <div class="ml-64 p-8">
+        <div class="mb-6 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Menu Categories</h1>
+            <a href="{% url 'japp:admin_menu_category_add' %}" 
+               class="bg-amber-600 text-white px-4 py-2 rounded-lg hover:bg-amber-700 transition-colors">
+                Add New Category
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for category in categories %}
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" 
+                             alt="{{ category.name }}" 
+                             class="w-full h-48 object-cover">
+                    {% endif %}
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">{{ category.name }}</h3>
+                        <p class="text-sm text-gray-600 mt-1">{{ category.description|truncatechars:100 }}</p>
+                        <div class="mt-4 flex justify-end space-x-2">
+                            <a href="{% url 'japp:admin_menu_category_edit' category.id %}" 
+                               class="text-amber-600 hover:text-amber-700">
+                                <i class="fas fa-edit mr-1"></i>Edit
+                            </a>
+                            <button onclick="confirmDelete({{ category.id }}, '{{ category.name|escapejs }}')"
+                                    class="text-red-600 hover:text-red-700">
+                                <i class="fas fa-trash-alt mr-1"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center py-12 text-gray-500">
+                    <i class="fas fa-tags text-4xl mb-4"></i>
+                    <p>No menu categories found. Click "Add New Category" to create one.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+        <h3 class="text-lg font-semibold mb-4">Confirm Delete</h3>
+        <p class="text-gray-600">Are you sure you want to delete "<span id="deleteCategoryName"></span>"?</p>
+        <div class="mt-6 flex justify-end space-x-3">
+            <button onclick="closeDeleteModal()" 
+                    class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+            <button onclick="deleteCategory()" 
+                    class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let deleteId = null;
+
+function confirmDelete(id, name) {
+    deleteId = id;
+    document.getElementById('deleteCategoryName').textContent = name;
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    deleteId = null;
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+
+async function deleteCategory() {
+    if (!deleteId) return;
+    
+    const deleteButton = document.querySelector('#deleteModal button:last-child');
+    const originalText = deleteButton.textContent;
+    
+    try {
+        deleteButton.textContent = 'Deleting...';
+        deleteButton.disabled = true;
+        
+        const response = await fetch(`/custom-admin/menu-categories/delete/${deleteId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            throw new Error('Failed to delete category');
+        }
+    } catch (error) {
+        alert('Error deleting category');
+    } finally {
+        deleteButton.textContent = originalText;
+        deleteButton.disabled = false;
+        closeDeleteModal();
+    }
+}
+</script>
+{% endblock %}

@@ -7,12 +7,14 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 from users.utils import send_callback_confirmation
-from .models import Subscriber, MenuCategory, MenuItem, GalleryImage, TeamMember, QuoteRequest, Contact
-from .forms import ContactForm, QuoteRequestForm,MenuItemForm, GalleryImageForm
+from .models import GalleryCategory, Subscriber, MenuCategory, MenuItem, GalleryImage, TeamMember, QuoteRequest, Contact
+from .forms import ContactForm, GalleryCategoryForm, MenuCategoryForm, QuoteRequestForm,MenuItemForm, GalleryImageForm
 from django.utils import timezone
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import timedelta, datetime
 import csv
+
+from japp import models
 
 def home(request):
     return render(request, 'japp/home.html')
@@ -50,35 +52,62 @@ def contact(request):
         if form.is_valid():
             contact = form.save()
             
-            # Send email notification
-            send_mail(
-                f'New Contact Form Submission: {contact.subject}',
-                f'Name: {contact.name}\nEmail: {contact.email}\nMessage: {contact.message}',
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.COMPANY_EMAIL],
-                fail_silently=False,
-            )
+            # Send email notification to admin
+            subject = f'New Contact Form Submission: {contact.subject}'
+            html_content = render_to_string('japp/email/contact_notification.html', {
+                'contact': contact
+            })
+            text_content = strip_tags(html_content)
             
-            messages.success(request, 'Your message has been sent successfully!')
+            try:
+                email = EmailMultiAlternatives(
+                    subject,
+                    text_content,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.COMPANY_EMAIL]
+                )
+                email.attach_alternative(html_content, "text/html")
+                email.send()
+                
+                messages.success(request, 'Thank you! Your message has been sent successfully.')
+            except Exception as e:
+                messages.warning(request, 'Your message was received but there was an error sending the notification.')
+                
             return redirect('japp:contact')
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = ContactForm()
     
-    return render(request, 'japp/contact.html', {'form': form})
+    context = {
+        'form': form
+    }
+    return render(request, 'japp/contact.html', context)
+
+from django.shortcuts import render
+from django.db.models import Prefetch
+from .models import MenuCategory, MenuItem
 
 def menu(request):
-    categories = MenuCategory.objects.all()
-    menu_items = MenuItem.objects.filter(is_available=True)
+    categories = MenuCategory.objects.prefetch_related(
+        Prefetch(
+            'items',
+            queryset=MenuItem.objects.filter(is_available=True).order_by('order', 'name')
+        )
+    ).all()
+    
     context = {
         'categories': categories,
-        'menu_items': menu_items
     }
     return render(request, 'japp/menu.html', context)
 
 def gallery(request):
-    images = GalleryImage.objects.all().order_by('-created_at')
+    categories = GalleryCategory.objects.all()
+    images = GalleryImage.objects.select_related('category').all().order_by('order', '-created_at')
+    
     context = {
-        'images': images
+        'categories': categories,
+        'images': images,
     }
     return render(request, 'japp/gallery.html', context)
 
@@ -148,54 +177,6 @@ def subscribe(request):
             messages.error(request, 'There was an error processing your subscription.')
     
     return redirect(request.META.get('HTTP_REFERER', '/'))
-
-# def quote_request(request):
-#     if request.method == 'POST':
-#         form = QuoteRequestForm(request.POST)
-#         if form.is_valid():
-#             quote = form.save(commit=False)
-#             if request.user.is_authenticated:
-#                 quote.user = request.user
-#             quote.save()
-            
-#             # Send email to company
-#             context = {
-#                 'quote': quote,
-#             }
-#             html_content = render_to_string('japp/email/quote_request_notification.html', context)
-#             text_content = strip_tags(html_content)
-            
-#             email = EmailMultiAlternatives(
-#                 f'New Quote Request - {quote.event_type}',
-#                 text_content,
-#                 settings.DEFAULT_FROM_EMAIL,
-#                 [settings.COMPANY_EMAIL]
-#             )
-#             email.attach_alternative(html_content, "text/html")
-#             email.send()
-            
-#             # Send confirmation email to customer
-#             customer_context = {
-#                 'quote': quote,
-#             }
-#             customer_html = render_to_string('japp/email/quote_request_confirmation.html', customer_context)
-#             customer_text = strip_tags(customer_html)
-            
-#             customer_email = EmailMultiAlternatives(
-#                 'Quote Request Received - JAWAKA Catering',
-#                 customer_text,
-#                 settings.DEFAULT_FROM_EMAIL,
-#                 [quote.email]
-#             )
-#             customer_email.attach_alternative(customer_html, "text/html")
-#             customer_email.send()
-            
-#             messages.success(request, 'Your quote request has been submitted successfully! We will contact you shortly.')
-#             return redirect('japp:quote_request')
-#     else:
-#         form = QuoteRequestForm()
-    
-#     return render(request, 'japp/quote_request.html', {'form': form})
 
 def quote_request_view(request):
     if request.method == 'POST':
@@ -318,11 +299,74 @@ def admin_menu_delete(request, pk):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
 
 @staff_member_required
+def admin_menu_categories(request):
+    categories = MenuCategory.objects.all().order_by('name')
+    context = {
+        'active_tab': 'menu_categories',
+        'categories': categories
+    }
+    return render(request, 'japp/admin/menu_categories.html', context)
+
+@staff_member_required
+def admin_menu_category_add(request):
+    if request.method == 'POST':
+        form = MenuCategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Menu category added successfully!')
+            return redirect('japp:admin_menu_categories')
+    else:
+        form = MenuCategoryForm()
+    
+    context = {
+        'form': form,
+        'action': 'Add',
+        'active_tab': 'menu_categories'
+    }
+    return render(request, 'japp/admin/menu_category_form.html', context)
+
+@staff_member_required
+def admin_menu_category_edit(request, pk):
+    category = get_object_or_404(MenuCategory, pk=pk)
+    
+    if request.method == 'POST':
+        form = MenuCategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Menu category updated successfully!')
+            return redirect('japp:admin_menu_categories')
+    else:
+        form = MenuCategoryForm(instance=category)
+    
+    context = {
+        'form': form,
+        'category': category,
+        'action': 'Edit',
+        'active_tab': 'menu_categories'
+    }
+    return render(request, 'japp/admin/menu_category_form.html', context)
+
+@staff_member_required
+def admin_menu_category_delete(request, pk):
+    category = get_object_or_404(MenuCategory, pk=pk)
+    
+    if request.method == 'POST':
+        if category.image:
+            category.image.delete(save=False)
+        category.delete()
+        messages.success(request, 'Menu category deleted successfully!')
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+@staff_member_required
 def admin_gallery(request):
-    images = GalleryImage.objects.all().order_by('-created_at')
+    images = GalleryImage.objects.select_related('category').all().order_by('order', '-created_at')
+    categories = GalleryCategory.objects.all()
     context = {
         'active_tab': 'gallery',
-        'images': images
+        'images': images,
+        'categories': categories
     }
     return render(request, 'japp/admin/gallery.html', context)
 
@@ -379,6 +423,54 @@ def admin_gallery_delete(request, pk):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+@staff_member_required
+def admin_gallery_categories(request):
+    categories = GalleryCategory.objects.all()
+    context = {
+        'categories': categories,
+        'active_tab': 'gallery_categories'
+    }
+    return render(request, 'japp/admin/gallery_categories.html', context)
+
+@staff_member_required
+def admin_gallery_category_add(request):
+    if request.method == 'POST':
+        form = GalleryCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Gallery category added successfully!')
+            return redirect('japp:admin_gallery_categories')
+    else:
+        form = GalleryCategoryForm()
+    
+    context = {
+        'form': form,
+        'action': 'Add',
+        'active_tab': 'gallery_categories'
+    }
+    return render(request, 'japp/admin/gallery_category_form.html', context)
+
+@staff_member_required
+def admin_gallery_category_edit(request, pk):
+    category = get_object_or_404(GalleryCategory, pk=pk)
+    
+    if request.method == 'POST':
+        form = GalleryCategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Gallery category updated successfully!')
+            return redirect('japp:admin_gallery_categories')
+    else:
+        form = GalleryCategoryForm(instance=category)
+    
+    context = {
+        'form': form,
+        'category': category,
+        'action': 'Edit',
+        'active_tab': 'gallery_categories'
+    }
+    return render(request, 'japp/admin/gallery_category_form.html', context)
 
 @staff_member_required
 def admin_quotes(request):

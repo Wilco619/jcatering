@@ -29,30 +29,42 @@ class MenuItem(models.Model):
     category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE, related_name='items')
     name = models.CharField(max_length=200)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     image = models.ImageField(upload_to='menu_items/')
     is_available = models.BooleanField(default=True)
+    show_price = models.BooleanField(default=False, help_text="Check this to display the price on the menu")
     created_at = models.DateTimeField(auto_now_add=True)
+    order = models.IntegerField(default=0, help_text="Order in which items appear (lower numbers appear first)")
+
+    class Meta:
+        ordering = ['category', 'order', 'name']
 
     def __str__(self):
         return self.name
 
 class GalleryCategory(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         verbose_name_plural = 'Gallery Categories'
+        ordering = ['name']
 
     def __str__(self):
         return self.name
 
 class GalleryImage(models.Model):
-    category = models.ForeignKey(GalleryCategory, on_delete=models.CASCADE, related_name='images')
     title = models.CharField(max_length=200)
+    category = models.ForeignKey(GalleryCategory, on_delete=models.CASCADE, related_name='images')
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='gallery/')
+    image = models.ImageField(upload_to='gallery/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    order = models.IntegerField(default=0, help_text="Display order (lower numbers appear first)")
+    
+    class Meta:
+        ordering = ['order', '-created_at']
 
     def __str__(self):
         return self.title

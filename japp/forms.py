@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact, QuoteRequest, MenuItem, MenuCategory, GalleryImage
+from .models import Contact, QuoteRequest, MenuItem, MenuCategory, GalleryImage, GalleryCategory
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -100,7 +100,7 @@ class QuoteRequestForm(forms.ModelForm):
 class MenuItemForm(forms.ModelForm):
     class Meta:
         model = MenuItem
-        fields = ['name', 'category', 'description', 'price', 'image', 'is_available']
+        fields = ['name', 'category', 'description', 'price', 'show_price', 'image', 'is_available', 'order']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
@@ -116,8 +116,15 @@ class MenuItemForm(forms.ModelForm):
             }),
             'price': forms.NumberInput(attrs={
                 'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
-                'placeholder': 'Price',
+                'placeholder': 'Price (optional)',
                 'step': '0.01'
+            }),
+            'show_price': forms.CheckboxInput(attrs={
+                'class': 'h-4 w-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500'
+            }),
+            'order': forms.NumberInput(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'placeholder': 'Display order'
             }),
             'image': forms.FileInput(attrs={
                 'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
@@ -171,3 +178,47 @@ class GalleryImageForm(forms.ModelForm):
             if image.size > 5 * 1024 * 1024:  # 5MB limit
                 raise forms.ValidationError("Image file too large ( > 5MB )")
         return image
+
+class MenuCategoryForm(forms.ModelForm):
+    class Meta:
+        model = MenuCategory
+        fields = ['name', 'slug', 'description', 'image']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'placeholder': 'Category name'
+            }),
+            'slug': forms.TextInput(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'placeholder': 'category-slug'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'rows': 3,
+                'placeholder': 'Category description'
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'accept': 'image/*'
+            })
+        }
+
+class GalleryCategoryForm(forms.ModelForm):
+    class Meta:
+        model = GalleryCategory
+        fields = ['name', 'slug', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'placeholder': 'Category name'
+            }),
+            'slug': forms.TextInput(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'placeholder': 'category-slug'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'w-full rounded-lg border-gray-300 focus:border-amber-500 focus:ring-amber-500',
+                'rows': 3,
+                'placeholder': 'Category description'
+            })
+        }

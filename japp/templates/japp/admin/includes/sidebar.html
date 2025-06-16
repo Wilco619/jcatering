@@ -29,10 +29,22 @@
             <span>Menu Items</span>
         </a>
         
+        <a href="{% url 'japp:admin_menu_categories' %}"
+           class="flex items-center px-6 py-3 hover:bg-amber-600/30 {% if active_tab == 'menu_categories' %}bg-amber-600/40{% endif %} transition-colors duration-200">
+            <i class="fas fa-tags mr-3"></i>
+            <span>Menu Categories</span>
+        </a>
+        
         <a href="{% url 'japp:admin_gallery' %}"
            class="flex items-center px-6 py-3 hover:bg-amber-600/30 {% if active_tab == 'gallery' %}bg-amber-600/40{% endif %} transition-colors duration-200">
             <i class="fas fa-images mr-3"></i>
             <span>Gallery</span>
+        </a>
+
+        <a href="{% url 'japp:admin_gallery_categories' %}"
+           class="flex items-center px-6 py-3 hover:bg-amber-600/30 {% if active_tab == 'gallery_categories' %}bg-amber-600/40{% endif %} transition-colors duration-200">
+            <i class="fas fa-folder mr-3"></i>
+            <span>Gallery Categories</span>
         </a>
 
         <!-- Customer Management -->
